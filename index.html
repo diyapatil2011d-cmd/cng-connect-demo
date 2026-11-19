@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#10243a">
+<meta name="description" content="CNG CONNECT helps CNG users explore station information and estimated waiting times.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+
+<title>CNG CONNECT | Smart CNG Finder</title>
+<style>
+:root{--navy:#10243a;--blue:#1769aa;--cyan:#25b8c7;--green:#16865b;--amber:#d58a18;--red:#c64d4d;--bg:#f3f7fb;--ink:#172b3d;--muted:#6b7d8e;--line:#e2eaf1;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial;color:var(--ink)}
+header{background:linear-gradient(120deg,#10243a,#155b87);color:white;padding:20px max(20px,calc((100% - 1120px)/2));display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:#25b8c7;display:grid;place-items:center;font-size:24px;font-weight:900;color:#09253b}.brand h1{font-size:21px;letter-spacing:1.4px;margin:0}.brand small{display:block;color:#c7e4f2;font-size:11px;letter-spacing:2px;margin-top:2px}
+.header-right{font-size:12px;color:#d6e9f4;text-align:right}
+main{max-width:1120px;margin:24px auto;padding:0 18px 48px}
+.demo{background:#fff7e7;border:1px solid #f0d9a7;color:#80520d;padding:11px 14px;border-radius:12px;font-size:12px;line-height:1.5;margin-bottom:18px}
+.hero{background:linear-gradient(120deg,#e8f6fb,#edf7f2);border:1px solid #d7eaf0;border-radius:20px;padding:24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.hero h2{font-size:clamp(24px,4vw,34px);margin:0 0 8px;color:var(--navy)}.hero p{margin:0;color:#557080;max-width:580px;line-height:1.55}.hero-icon{font-size:54px}
+.rolebar{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.rolebtn,.btn{border:0;border-radius:11px;padding:12px 17px;font-weight:700;cursor:pointer;font-size:14px;transition:.15s}.rolebtn{background:white;color:#476174;border:1px solid var(--line)}.rolebtn.active{background:var(--navy);color:white;border-color:var(--navy)}.btn.primary{background:var(--blue);color:white}.btn.green{background:var(--green);color:white}.btn.light{background:#eaf3f8;color:#205271}.btn.danger{background:#fff0f0;color:var(--red)}button:hover{filter:brightness(.97);transform:translateY(-1px)}
+.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 5px 18px rgba(18,48,72,.04);margin-bottom:18px}
+.panel h3{margin:0 0 14px;font-size:18px;color:var(--navy)}.muted{color:var(--muted);font-size:13px;line-height:1.5}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}.stat{background:#f7fafc;border:1px solid var(--line);border-radius:14px;padding:15px}.stat strong{display:block;font-size:25px;color:var(--navy)}.stat span{font-size:12px;color:var(--muted)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}.field{display:flex;flex-direction:column;gap:6px;flex:1;min-width:150px}.field label{font-size:12px;font-weight:700;color:#536b7c}.field input,.field select,.field textarea{width:100%;border:1px solid #d8e3eb;border-radius:10px;padding:11px 12px;font:inherit;font-size:14px;background:white;color:var(--ink)}.field textarea{min-height:76px;resize:vertical}
+.station-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.station{border:1px solid var(--line);border-radius:15px;padding:16px;background:#fff}.station-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.station h4{margin:0 0 5px;font-size:16px;color:var(--navy)}.area{font-size:12px;color:var(--muted)}.status{font-size:11px;font-weight:800;border-radius:20px;padding:6px 9px;white-space:nowrap}.available{background:#e7f7ef;color:#14734d}.busy{background:#fff3df;color:#96600d}.unavailable{background:#ffeded;color:#ae3f3f}.wait{display:flex;align-items:baseline;gap:6px;margin:15px 0 8px}.wait strong{font-size:27px;color:var(--navy)}.wait span{font-size:12px;color:var(--muted)}.station-foot{display:flex;justify-content:space-between;gap:8px;align-items:center;border-top:1px solid #edf1f5;padding-top:10px;margin-top:10px}.tiny{font-size:11px;color:var(--muted)}.linkbtn{border:0;background:none;color:var(--blue);font-weight:700;font-size:12px;cursor:pointer;padding:5px}
+.owner-row{display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:10px;align-items:end;border-top:1px solid var(--line);padding:14px 0}.owner-row:first-of-type{border-top:0}
+.notice{padding:12px 14px;border-radius:11px;background:#edf7fb;color:#285a73;font-size:12px;line-height:1.5;margin-bottom:14px}
+.empty{padding:26px;text-align:center;color:var(--muted);border:1px dashed #cad8e2;border-radius:13px}
+.footer{text-align:center;color:#8293a1;font-size:11px;padding:20px}
+.hidden{display:none!important}
+@media(max-width:700px){header{padding:16px 18px}.header-right{text-align:left}.hero{padding:19px}.hero-icon{font-size:38px}.stats{grid-template-columns:1fr 1fr}.station-grid{grid-template-columns:1fr}.owner-row{grid-template-columns:1fr 1fr}.owner-row .field:first-child{grid-column:1/-1}.panel{padding:16px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><div class="logo">C</div><div><h1>CNG CONNECT</h1><small>SMARTER REFUELLING · BETTER RESOURCE MANAGEMENT</small></div></div>
+ <div class="header-right">NCSC PROJECT PROTOTYPE<br>Raigad, Maharashtra</div>
+</header>
+<main>
+ <div class="demo"><strong>DEMONSTRATION MODE:</strong> Station names, availability and waiting times shown here are sample data, not live pump information. Owner updates are saved in this browser for demonstration.</div>
+ <section class="hero"><div><h2>Find CNG. Save time. Reduce unnecessary travel.</h2><p>Check sample station availability and estimated queues before choosing where to refuel. Help reduce avoidable waiting, repeated trips and wasted fuel.</p><button id="pwaInstallButton" class="btn primary hidden" style="margin-top:14px" onclick="installCNGApp()">＋ Install CNG CONNECT</button></div><div class="hero-icon">⛽</div></section>
+ <div class="rolebar">
+  <button class="rolebtn active" id="userTab" onclick="showRole('user')">👤 User Dashboard</button>
+  <button class="rolebtn" id="ownerTab" onclick="showRole('owner')">🏢 Station Owner</button>
+ </div>
+ <section id="userView">
+  <div class="stats">
+   <div class="stat"><strong id="totalCount">3</strong><span>Demo stations</span></div>
+   <div class="stat"><strong id="availableCount">1</strong><span>Currently marked available</span></div>
+   <div class="stat"><strong id="avgWait">10 min</strong><span>Average wait (available/busy)</span></div>
+  </div>
+  <div class="panel">
+   <h3>Find a CNG station</h3>
+   <div class="toolbar">
+    <div class="field"><label for="search">Search by station or area</label><input id="search" placeholder="e.g. Khopoli" oninput="renderStations()"></div>
+    <div class="field"><label for="filter">Availability</label><select id="filter" onchange="renderStations()"><option value="All">All stations</option><option>Available</option><option>Busy</option><option>Unavailable</option></select></div>
+   </div>
+   <div id="stationList" class="station-grid"></div>
+  </div>
+  <div class="panel">
+   <h3>Report station information</h3>
+   <p class="muted">Users can share what they observe. Reports are kept separate from official owner updates until verified.</p>
+   <form id="reportForm">
+    <div class="toolbar">
+     <div class="field"><label for="reportStation">Station</label><select id="reportStation"></select></div>
+     <div class="field"><label for="reportStatus">What did you observe?</label><select id="reportStatus"><option>Available</option><option>Busy</option><option>Unavailable</option></select></div>
+     <div class="field"><label for="reportWait">Estimated wait (minutes)</label><input id="reportWait" type="number" min="0" max="240" value="10"></div>
+    </div>
+    <div class="field" style="margin-bottom:12px"><label for="reportNote">Additional note (optional)</label><textarea id="reportNote" placeholder="Share a short observation"></textarea></div>
+    <button class="btn primary" type="submit">Submit user report</button><span id="reportMsg" class="muted" style="margin-left:10px"></span>
+   </form>
+  </div>
+  <div class="panel">
+   <h3>Customer feedback</h3>
+   <form id="feedbackForm">
+    <div class="toolbar">
+     <div class="field"><label for="feedbackStation">Station</label><select id="feedbackStation"></select></div>
+     <div class="field"><label for="rating">Rating</label><select id="rating"><option value="5">5 – Excellent</option><option value="4">4 – Good</option><option value="3">3 – Average</option><option value="2">2 – Needs improvement</option><option value="1">1 – Poor</option></select></div>
+    </div>
+    <div class="field" style="margin-bottom:12px"><label for="feedbackText">Your feedback</label><input id="feedbackText" placeholder="Comment about your experience"></div>
+    <button class="btn light" type="submit">Send feedback</button><span id="feedbackMsg" class="muted" style="margin-left:10px"></span>
+   </form>
+  </div>
+ </section>
+ <section id="ownerView" class="hidden">
+  <div class="panel">
+   <h3>Station owner dashboard</h3>
+   <div class="notice"><strong>Demo owner access:</strong> This is a role-switch demonstration, not secure identity verification. In a deployed version, only verified station owners/staff would be permitted to change official station information.</div>
+   <div class="stats">
+    <div class="stat"><strong id="ownerTotal">3</strong><span>Stations listed</span></div>
+    <div class="stat"><strong id="ownerReports">0</strong><span>User reports received</span></div>
+    <div class="stat"><strong id="ownerFeedback">0</strong><span>Feedback entries</span></div>
+   </div>
+   <p class="muted">Select a station below to update its official demonstration status and estimated queue. Changes appear immediately in the User Dashboard on this browser.</p>
+   <div id="ownerRows"></div>
+  </div>
+  <div class="panel">
+   <h3>Incoming user reports</h3><div id="reportsList" class="muted">No reports yet.</div>
+  </div>
+  <div class="panel">
+   <h3>Customer feedback received</h3><div id="feedbackList" class="muted">No feedback yet.</div>
+  </div>
+ </section>
+ <div class="footer">CNG CONNECT · NCSC IDEA-STAGE PROTOTYPE · Sample data only</div>
+</main>
+<script>
+const seed = [
+ {id:"ST001",name:"Demo CNG Station A",area:"Khopoli",address:"Demo address, Khopoli, Raigad, Maharashtra",status:"Available",wait:10,updated:"Demo data"},
+ {id:"ST002",name:"Demo CNG Station B",area:"Lodhivali",address:"Demo address, Lodhivali, Raigad, Maharashtra",status:"Busy",wait:25,updated:"Demo data"},
+ {id:"ST003",name:"Demo CNG Station C",area:"Pali",address:"Demo address, Pali, Raigad, Maharashtra",status:"Unavailable",wait:0,updated:"Demo data"}
+];
+let stations = JSON.parse(localStorage.getItem("cng_stations")||"null") || seed;
+let reports = JSON.parse(localStorage.getItem("cng_reports")||"[]");
+let feedback = JSON.parse(localStorage.getItem("cng_feedback")||"[]");
+function save(){localStorage.setItem("cng_stations",JSON.stringify(stations));localStorage.setItem("cng_reports",JSON.stringify(reports));localStorage.setItem("cng_feedback",JSON.stringify(feedback));}
+function showRole(role){
+ document.getElementById("userView").classList.toggle("hidden",role!=="user");
+ document.getElementById("ownerView").classList.toggle("hidden",role!=="owner");
+ document.getElementById("userTab").classList.toggle("active",role==="user");
+ document.getElementById("ownerTab").classList.toggle("active",role==="owner");
+ if(role==="owner")renderOwner();else renderStations();
+}
+function statusClass(s){return s==="Available"?"available":s==="Busy"?"busy":"unavailable"}
+function refreshStats(){
+ document.getElementById("totalCount").textContent=stations.length;
+ document.getElementById("availableCount").textContent=stations.filter(s=>s.status==="Available").length;
+ const active=stations.filter(s=>s.status!=="Unavailable");
+ const avg=active.length?Math.round(active.reduce((a,s)=>a+Number(s.wait),0)/active.length):0;
+ document.getElementById("avgWait").textContent=avg+" min";
+ document.getElementById("ownerTotal").textContent=stations.length;
+ document.getElementById("ownerReports").textContent=reports.length;
+ document.getElementById("ownerFeedback").textContent=feedback.length;
+}
+function fillStationSelects(){
+ ["reportStation","feedbackStation"].forEach(id=>{
+  const el=document.getElementById(id),old=el.value;
+  el.innerHTML=stations.map(s=>`<option value="${s.id}">${s.name} — ${s.area}</option>`).join("");
+  if(stations.some(s=>s.id===old))el.value=old;
+ });
+}
+function renderStations(){
+ const q=document.getElementById("search").value.toLowerCase(),f=document.getElementById("filter").value;
+ const shown=stations.filter(s=>(s.name+" "+s.area).toLowerCase().includes(q)&&(f==="All"||s.status===f));
+ document.getElementById("stationList").innerHTML=shown.length?shown.map(s=>`
+ <article class="station"><div class="station-top"><div><h4>${esc(s.name)}</h4><div class="area">📍 ${esc(s.area)}</div></div><span class="status ${statusClass(s.status)}">${s.status}</span></div>
+ <div class="wait"><strong>${s.status==="Unavailable"?"—":Number(s.wait)}</strong><span>${s.status==="Unavailable"?"Not available":"minutes estimated wait"}</span></div>
+ <div class="tiny">${esc(s.address)}</div><div class="station-foot"><span class="tiny">Last update: ${esc(s.updated)}</span><button class="linkbtn" onclick="openMap('${encodeURIComponent(s.area+', Raigad, Maharashtra')}')">Search area ↗</button></div></article>`).join(""):'<div class="empty" style="grid-column:1/-1">No matching stations. Try another search or filter.</div>';
+ refreshStats();fillStationSelects();
+}
+function renderOwner(){
+ document.getElementById("ownerRows").innerHTML=stations.map(s=>`
+ <div class="owner-row"><div><strong>${esc(s.name)}</strong><div class="tiny">${esc(s.area)} · ${esc(s.id)}</div></div>
+ <div class="field"><label>Status</label><select id="status_${s.id}"><option ${s.status==="Available"?"selected":""}>Available</option><option ${s.status==="Busy"?"selected":""}>Busy</option><option ${s.status==="Unavailable"?"selected":""}>Unavailable</option></select></div>
+ <div class="field"><label>Wait (minutes)</label><input id="wait_${s.id}" type="number" min="0" max="240" value="${Number(s.wait)}"></div>
+ <button class="btn green" onclick="updateStation('${s.id}')">Save update</button></div>`).join("");
+ document.getElementById("reportsList").innerHTML=reports.length?reports.slice().reverse().map(r=>`<div style="padding:10px 0;border-bottom:1px solid var(--line)"><strong>${esc(r.station)}</strong> · ${esc(r.status)} · ${r.wait} min <div class="tiny">${esc(r.note||"No note")} · ${esc(r.time)}</div></div>`).join(""):"No reports yet.";
+ document.getElementById("feedbackList").innerHTML=feedback.length?feedback.slice().reverse().map(r=>`<div style="padding:10px 0;border-bottom:1px solid var(--line)"><strong>${esc(r.station)}</strong> · ${r.rating}/5 <div class="tiny">${esc(r.comment)} · ${esc(r.time)}</div></div>`).join(""):"No feedback yet.";
+ refreshStats();
+}
+function updateStation(id){
+ const s=stations.find(x=>x.id===id),status=document.getElementById("status_"+id).value,wait=Number(document.getElementById("wait_"+id).value);
+ if(!Number.isFinite(wait)||wait<0||wait>240){alert("Enter a waiting time between 0 and 240 minutes.");return;}
+ s.status=status;s.wait=status==="Unavailable"?0:wait;s.updated="Just now (demo owner update)";
+ save();renderOwner();renderStations();
+ const note=document.createElement("div");note.className="notice";note.textContent="Saved: "+s.name+" is now marked "+s.status+" with "+s.wait+" minute(s) estimated wait. The User Dashboard has been updated.";document.getElementById("ownerRows").prepend(note);
+}
+function openMap(q){window.open("https://www.google.com/maps/search/?api=1&query="+q,"_blank","noopener")}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+document.getElementById("reportForm").addEventListener("submit",e=>{
+ e.preventDefault();const s=stations.find(x=>x.id===document.getElementById("reportStation").value);
+ reports.push({station:s.name,status:document.getElementById("reportStatus").value,wait:Number(document.getElementById("reportWait").value),note:document.getElementById("reportNote").value,time:new Date().toLocaleString()});
+ save();document.getElementById("reportMsg").textContent="Report submitted for owner review.";document.getElementById("reportNote").value="";renderOwner();
+});
+document.getElementById("feedbackForm").addEventListener("submit",e=>{
+ e.preventDefault();const s=stations.find(x=>x.id===document.getElementById("feedbackStation").value),comment=document.getElementById("feedbackText").value.trim();
+ if(!comment){document.getElementById("feedbackMsg").textContent="Please add a short comment.";return;}
+ feedback.push({station:s.name,rating:Number(document.getElementById("rating").value),comment,time:new Date().toLocaleString()});
+ save();document.getElementById("feedbackMsg").textContent="Thank you! Feedback saved.";document.getElementById("feedbackText").value="";renderOwner();
+});
+renderStations();renderOwner();
+
+// PWA setup: install prompt where supported; service worker for app-shell caching.
+let deferredInstallPrompt = null;
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  const button = document.getElementById("pwaInstallButton");
+  if (button) button.classList.remove("hidden");
+});
+window.addEventListener("appinstalled", () => {
+  const button = document.getElementById("pwaInstallButton");
+  if (button) button.classList.add("hidden");
+});
+async function installCNGApp() {
+  if (!deferredInstallPrompt) {
+    alert("On iPhone: open this site in Safari, tap Share, then Add to Home Screen. On Android: use Chrome's menu and choose Install app or Add to Home screen.");
+    return;
+  }
+  deferredInstallPrompt.prompt();
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+}
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch(err => console.log("Service worker registration failed", err));
+  });
+}
+
+</script>
+</body>
+</html>
