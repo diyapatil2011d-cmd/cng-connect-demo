@@ -1,213 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#10243a">
-<meta name="description" content="CNG CONNECT helps CNG users explore station information and estimated waiting times.">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
-
-<title>CNG CONNECT | Smart CNG Finder</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10243a"><meta name="description" content="CNG CONNECT helps users compare nearby energy stations, availability, queues and active service points.">
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>CNG CONNECT | Smart Energy Station Finder</title>
 <style>
-:root{--navy:#10243a;--blue:#1769aa;--cyan:#25b8c7;--green:#16865b;--amber:#d58a18;--red:#c64d4d;--bg:#f3f7fb;--ink:#172b3d;--muted:#6b7d8e;--line:#e2eaf1;--white:#fff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial;color:var(--ink)}
-header{background:linear-gradient(120deg,#10243a,#155b87);color:white;padding:20px max(20px,calc((100% - 1120px)/2));display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:#25b8c7;display:grid;place-items:center;font-size:24px;font-weight:900;color:#09253b}.brand h1{font-size:21px;letter-spacing:1.4px;margin:0}.brand small{display:block;color:#c7e4f2;font-size:11px;letter-spacing:2px;margin-top:2px}
-.header-right{font-size:12px;color:#d6e9f4;text-align:right}
-main{max-width:1120px;margin:24px auto;padding:0 18px 48px}
-.demo{background:#fff7e7;border:1px solid #f0d9a7;color:#80520d;padding:11px 14px;border-radius:12px;font-size:12px;line-height:1.5;margin-bottom:18px}
-.hero{background:linear-gradient(120deg,#e8f6fb,#edf7f2);border:1px solid #d7eaf0;border-radius:20px;padding:24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.hero h2{font-size:clamp(24px,4vw,34px);margin:0 0 8px;color:var(--navy)}.hero p{margin:0;color:#557080;max-width:580px;line-height:1.55}.hero-icon{font-size:54px}
-.rolebar{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.rolebtn,.btn{border:0;border-radius:11px;padding:12px 17px;font-weight:700;cursor:pointer;font-size:14px;transition:.15s}.rolebtn{background:white;color:#476174;border:1px solid var(--line)}.rolebtn.active{background:var(--navy);color:white;border-color:var(--navy)}.btn.primary{background:var(--blue);color:white}.btn.green{background:var(--green);color:white}.btn.light{background:#eaf3f8;color:#205271}.btn.danger{background:#fff0f0;color:var(--red)}button:hover{filter:brightness(.97);transform:translateY(-1px)}
-.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 5px 18px rgba(18,48,72,.04);margin-bottom:18px}
-.panel h3{margin:0 0 14px;font-size:18px;color:var(--navy)}.muted{color:var(--muted);font-size:13px;line-height:1.5}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}.stat{background:#f7fafc;border:1px solid var(--line);border-radius:14px;padding:15px}.stat strong{display:block;font-size:25px;color:var(--navy)}.stat span{font-size:12px;color:var(--muted)}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}.field{display:flex;flex-direction:column;gap:6px;flex:1;min-width:150px}.field label{font-size:12px;font-weight:700;color:#536b7c}.field input,.field select,.field textarea{width:100%;border:1px solid #d8e3eb;border-radius:10px;padding:11px 12px;font:inherit;font-size:14px;background:white;color:var(--ink)}.field textarea{min-height:76px;resize:vertical}
-.station-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.station{border:1px solid var(--line);border-radius:15px;padding:16px;background:#fff}.station-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.station h4{margin:0 0 5px;font-size:16px;color:var(--navy)}.area{font-size:12px;color:var(--muted)}.status{font-size:11px;font-weight:800;border-radius:20px;padding:6px 9px;white-space:nowrap}.available{background:#e7f7ef;color:#14734d}.busy{background:#fff3df;color:#96600d}.unavailable{background:#ffeded;color:#ae3f3f}.wait{display:flex;align-items:baseline;gap:6px;margin:15px 0 8px}.wait strong{font-size:27px;color:var(--navy)}.wait span{font-size:12px;color:var(--muted)}.station-foot{display:flex;justify-content:space-between;gap:8px;align-items:center;border-top:1px solid #edf1f5;padding-top:10px;margin-top:10px}.tiny{font-size:11px;color:var(--muted)}.linkbtn{border:0;background:none;color:var(--blue);font-weight:700;font-size:12px;cursor:pointer;padding:5px}
-.owner-row{display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:10px;align-items:end;border-top:1px solid var(--line);padding:14px 0}.owner-row:first-of-type{border-top:0}
-.notice{padding:12px 14px;border-radius:11px;background:#edf7fb;color:#285a73;font-size:12px;line-height:1.5;margin-bottom:14px}
-.empty{padding:26px;text-align:center;color:var(--muted);border:1px dashed #cad8e2;border-radius:13px}
-.footer{text-align:center;color:#8293a1;font-size:11px;padding:20px}
-.hidden{display:none!important}
-@media(max-width:700px){header{padding:16px 18px}.header-right{text-align:left}.hero{padding:19px}.hero-icon{font-size:38px}.stats{grid-template-columns:1fr 1fr}.station-grid{grid-template-columns:1fr}.owner-row{grid-template-columns:1fr 1fr}.owner-row .field:first-child{grid-column:1/-1}.panel{padding:16px}}
-</style>
-</head>
+:root{--navy:#10243a;--navy2:#173e5b;--teal:#20b6ad;--mint:#e8f8f5;--blue:#1769aa;--green:#16865b;--amber:#d58a18;--red:#c64d4d;--bg:#f2f6fa;--ink:#172b3d;--muted:#718394;--line:#e1eaf0;--white:#fff;--shadow:0 12px 32px rgba(16,36,58,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}button,input,select,textarea{font:inherit}header{background:linear-gradient(120deg,var(--navy),#155b78);color:#fff;padding:18px max(18px,calc((100% - 1160px)/2));display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:15px;background:var(--teal);display:grid;place-items:center;font-size:25px;font-weight:900;color:#09253b}.brand h1{font-size:21px;letter-spacing:1.5px;margin:0}.brand small{display:block;color:#c7e8e8;font-size:10px;letter-spacing:1.8px;margin-top:3px}.headnote{text-align:right;color:#d9eef0;font-size:11px;line-height:1.5}main{max-width:1160px;margin:24px auto;padding:0 18px 46px}.hero{background:linear-gradient(115deg,#e5f6f6,#edf5fb);border:1px solid #d4e9eb;border-radius:22px;padding:26px;display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:18px}.hero h2{margin:0 0 8px;color:var(--navy);font-size:clamp(25px,4vw,36px);line-height:1.12}.hero p{margin:0;color:#587282;max-width:660px;line-height:1.6;font-size:14px}.heroicon{font-size:52px}.rolebar{display:flex;gap:9px;margin:18px 0;flex-wrap:wrap}.rolebtn,.btn{border:0;border-radius:11px;padding:12px 16px;font-weight:750;cursor:pointer;transition:.15s}.rolebtn{background:#fff;border:1px solid var(--line);color:#4e6677}.rolebtn.active{background:var(--navy);color:#fff;border-color:var(--navy)}.btn.primary{background:var(--blue);color:white}.btn.teal{background:var(--teal);color:#062d32}.btn.light{background:#eaf3f8;color:#205271}.btn.ghost{background:white;border:1px solid var(--line);color:var(--navy)}.btn.red{background:#fff0f0;color:var(--red)}button:hover{filter:brightness(.97);transform:translateY(-1px)}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #7edbd2;outline-offset:2px}.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow);margin-bottom:17px}.panel h3{margin:0 0 14px;color:var(--navy);font-size:18px}.muted{color:var(--muted);font-size:13px;line-height:1.55}.toolbar{display:flex;gap:11px;flex-wrap:wrap;margin-bottom:14px}.field{display:flex;flex-direction:column;gap:6px;flex:1;min-width:155px}.field label{font-size:12px;font-weight:750;color:#526b7b}.field input,.field select,.field textarea{width:100%;border:1px solid #d7e2e9;border-radius:10px;padding:11px 12px;background:white;color:var(--ink);font-size:14px}.field textarea{min-height:76px;resize:vertical}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:17px}.stat{background:#f7fafc;border:1px solid var(--line);border-radius:14px;padding:14px}.stat strong{display:block;color:var(--navy);font-size:25px}.stat span{font-size:11px;color:var(--muted)}.station-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.station{background:#fff;border:1px solid var(--line);border-radius:15px;padding:16px}.stationtop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.station h4{margin:0 0 5px;color:var(--navy);font-size:16px}.area,.tiny{font-size:11px;color:var(--muted);line-height:1.5}.pill{font-size:10px;font-weight:850;padding:6px 9px;border-radius:30px;white-space:nowrap}.available{background:#e5f7ed;color:#14734d}.busy{background:#fff3df;color:#96600d}.unavailable{background:#ffeded;color:#ae3f3f}.waitrow{display:flex;align-items:baseline;gap:6px;margin:12px 0 9px}.waitrow strong{font-size:27px;color:var(--navy)}.waitrow span{font-size:11px;color:var(--muted)}.pointbox{background:#f5fafb;border:1px solid #e3eff0;border-radius:11px;padding:10px 12px;margin:10px 0}.pointtop{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:12px;font-weight:750}.track{height:7px;border-radius:9px;background:#e3e9ed;overflow:hidden;margin-top:8px}.track>i{display:block;height:100%;background:linear-gradient(90deg,#20b6ad,#16865b);border-radius:9px}.stationfoot{border-top:1px solid #edf1f5;padding-top:10px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;gap:8px}.linkbtn{border:0;background:none;color:var(--blue);font-size:12px;font-weight:750;cursor:pointer}.notice{background:#eef8fb;border:1px solid #dceef3;color:#315e70;padding:12px 14px;border-radius:11px;font-size:12px;line-height:1.5;margin-bottom:14px}.loginwrap{max-width:520px;margin:0 auto}.loginhead{display:flex;align-items:center;gap:10px;margin-bottom:14px}.loginicon{width:42px;height:42px;border-radius:13px;background:var(--mint);display:grid;place-items:center;font-size:21px}.loginform{display:grid;gap:12px}.loginerror{color:var(--red);font-size:12px;min-height:16px}.ownerheading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.owner-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.controlcard{border:1px solid var(--line);border-radius:13px;padding:14px}.controlcard h4{margin:0 0 10px;color:var(--navy)}.controlrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:9px 0;font-size:13px}.stepper{display:flex;align-items:center;gap:8px}.stepper button{width:30px;height:30px;border:1px solid var(--line);background:#f7fafc;border-radius:8px;font-weight:800;cursor:pointer}.stepper strong{min-width:20px;text-align:center}.ownerbar{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.ownerbar .field{max-width:180px}.hidden{display:none!important}.empty{padding:26px;text-align:center;color:var(--muted);border:1px dashed #cad8e2;border-radius:13px}.footer{text-align:center;color:#8293a1;font-size:11px;padding:18px}.categorytag{display:inline-flex;align-items:center;gap:6px;background:#eaf5f7;color:#235b69;padding:6px 9px;border-radius:30px;font-size:10px;font-weight:800}.divider{border:0;border-top:1px solid var(--line);margin:16px 0}
+@media(max-width:720px){header{padding:15px 17px}.headnote{text-align:left}.hero{padding:19px}.heroicon{font-size:38px}.station-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.stats .stat:last-child{grid-column:1/-1}.owner-controls{grid-template-columns:1fr}.panel{padding:16px}.brand h1{font-size:19px}}
+</style></head>
 <body>
-<header>
- <div class="brand"><div class="logo">C</div><div><h1>CNG CONNECT</h1><small>SMARTER REFUELLING · BETTER RESOURCE MANAGEMENT</small></div></div>
- <div class="header-right">NCSC PROJECT PROTOTYPE<br>Raigad, Maharashtra</div>
-</header>
+<header><div class="brand"><div class="logo">C</div><div><h1>CNG CONNECT</h1><small>SMARTER REFUELLING · BETTER RESOURCE MANAGEMENT</small></div></div><div class="headnote">NCSC PROJECT · RAIGAD, MAHARASHTRA<br>Multi-energy station connectivity</div></header>
 <main>
- <div class="demo"><strong>DEMONSTRATION MODE:</strong> Station names, availability and waiting times shown here are sample data, not live pump information. Owner updates are saved in this browser for demonstration.</div>
- <section class="hero"><div><h2>Find CNG. Save time. Reduce unnecessary travel.</h2><p>Check sample station availability and estimated queues before choosing where to refuel. Help reduce avoidable waiting, repeated trips and wasted fuel.</p><button id="pwaInstallButton" class="btn primary hidden" style="margin-top:14px" onclick="installCNGApp()">＋ Install CNG CONNECT</button></div><div class="hero-icon">⛽</div></section>
- <div class="rolebar">
-  <button class="rolebtn active" id="userTab" onclick="showRole('user')">👤 User Dashboard</button>
-  <button class="rolebtn" id="ownerTab" onclick="showRole('owner')">🏢 Station Owner</button>
- </div>
- <section id="userView">
-  <div class="stats">
-   <div class="stat"><strong id="totalCount">3</strong><span>Demo stations</span></div>
-   <div class="stat"><strong id="availableCount">1</strong><span>Currently marked available</span></div>
-   <div class="stat"><strong id="avgWait">10 min</strong><span>Average wait (available/busy)</span></div>
-  </div>
-  <div class="panel">
-   <h3>Find a CNG station</h3>
-   <div class="toolbar">
-    <div class="field"><label for="search">Search by station or area</label><input id="search" placeholder="e.g. Khopoli" oninput="renderStations()"></div>
-    <div class="field"><label for="filter">Availability</label><select id="filter" onchange="renderStations()"><option value="All">All stations</option><option>Available</option><option>Busy</option><option>Unavailable</option></select></div>
-   </div>
-   <div id="stationList" class="station-grid"></div>
-  </div>
-  <div class="panel">
-   <h3>Report station information</h3>
-   <p class="muted">Users can share what they observe. Reports are kept separate from official owner updates until verified.</p>
-   <form id="reportForm">
-    <div class="toolbar">
-     <div class="field"><label for="reportStation">Station</label><select id="reportStation"></select></div>
-     <div class="field"><label for="reportStatus">What did you observe?</label><select id="reportStatus"><option>Available</option><option>Busy</option><option>Unavailable</option></select></div>
-     <div class="field"><label for="reportWait">Estimated wait (minutes)</label><input id="reportWait" type="number" min="0" max="240" value="10"></div>
-    </div>
-    <div class="field" style="margin-bottom:12px"><label for="reportNote">Additional note (optional)</label><textarea id="reportNote" placeholder="Share a short observation"></textarea></div>
-    <button class="btn primary" type="submit">Submit user report</button><span id="reportMsg" class="muted" style="margin-left:10px"></span>
-   </form>
-  </div>
-  <div class="panel">
-   <h3>Customer feedback</h3>
-   <form id="feedbackForm">
-    <div class="toolbar">
-     <div class="field"><label for="feedbackStation">Station</label><select id="feedbackStation"></select></div>
-     <div class="field"><label for="rating">Rating</label><select id="rating"><option value="5">5 – Excellent</option><option value="4">4 – Good</option><option value="3">3 – Average</option><option value="2">2 – Needs improvement</option><option value="1">1 – Poor</option></select></div>
-    </div>
-    <div class="field" style="margin-bottom:12px"><label for="feedbackText">Your feedback</label><input id="feedbackText" placeholder="Comment about your experience"></div>
-    <button class="btn light" type="submit">Send feedback</button><span id="feedbackMsg" class="muted" style="margin-left:10px"></span>
-   </form>
-  </div>
- </section>
- <section id="ownerView" class="hidden">
-  <div class="panel">
-   <h3>Station owner dashboard</h3>
-   <div class="notice"><strong>Demo owner access:</strong> This is a role-switch demonstration, not secure identity verification. In a deployed version, only verified station owners/staff would be permitted to change official station information.</div>
-   <div class="stats">
-    <div class="stat"><strong id="ownerTotal">3</strong><span>Stations listed</span></div>
-    <div class="stat"><strong id="ownerReports">0</strong><span>User reports received</span></div>
-    <div class="stat"><strong id="ownerFeedback">0</strong><span>Feedback entries</span></div>
-   </div>
-   <p class="muted">Select a station below to update its official demonstration status and estimated queue. Changes appear immediately in the User Dashboard on this browser.</p>
-   <div id="ownerRows"></div>
-  </div>
-  <div class="panel">
-   <h3>Incoming user reports</h3><div id="reportsList" class="muted">No reports yet.</div>
-  </div>
-  <div class="panel">
-   <h3>Customer feedback received</h3><div id="feedbackList" class="muted">No feedback yet.</div>
-  </div>
- </section>
- <div class="footer">CNG CONNECT · NCSC IDEA-STAGE PROTOTYPE · Sample data only</div>
+<section class="hero"><div><h2>Find energy. Save time.<br>Make every journey count.</h2><p>Compare station availability, estimated queues and active service points across CNG, Petrol, Diesel and EV charging locations. Choose with better information and reduce avoidable waiting and travel.</p></div><div class="heroicon">⚡</div></section>
+<div class="rolebar"><button class="rolebtn active" id="userTab" onclick="showRole('user')">👤 User</button><button class="rolebtn" id="ownerTab" onclick="showRole('owner')">🏢 Station Owner</button></div>
+<section id="userView">
+<div class="stats"><div class="stat"><strong id="totalCount">26</strong><span>Stations listed</span></div><div class="stat"><strong id="availableCount">—</strong><span>Marked available</span></div><div class="stat"><strong id="avgWait">—</strong><span>Average estimated wait</span></div></div>
+<div class="panel"><details><summary style="cursor:pointer;font-weight:800;color:var(--navy);padding:2px 0">Judges’ walkthrough · How the app works</summary><div class="muted" style="margin-top:12px"><ol style="padding-left:20px;line-height:1.8"><li>Select an energy category to view its stations.</li><li>Compare availability, estimated waiting time and active service points.</li><li>Open <strong>Station Owner</strong> and sign in to one station account.</li><li>Change its status, waiting time or active points, then save.</li><li>Return to <strong>User</strong> and check that station’s updated listing.</li></ol><div style="padding:11px 13px;background:#f1f7fa;border-radius:10px;margin-top:8px"><strong>Presentation account:</strong> CNG001 &nbsp;·&nbsp; Password: CNG@101<br><span class="tiny">This is a simulated presentation account. Changes are saved in this browser only.</span></div></div></details></div>
+<div class="panel"><h3>Find your energy station</h3><div class="toolbar"><div class="field"><label for="categoryFilter">Energy category</label><select id="categoryFilter" onchange="renderStations()"><option value="CNG">CNG</option><option value="Petrol">Petrol</option><option value="Diesel">Diesel</option><option value="EV Charging Point">EV Charging Point</option></select></div><div class="field"><label for="search">Search station or area</label><input id="search" placeholder="Search station name or area" oninput="renderStations()"></div><div class="field"><label for="statusFilter">Availability</label><select id="statusFilter" onchange="renderStations()"><option value="All">All stations</option><option>Available</option><option>Busy</option><option>Unavailable</option></select></div></div><div id="stationList" class="station-grid"></div></div>
+<div class="panel"><h3>Share a station observation</h3><p class="muted">User observations are stored separately and can be reviewed by station operators.</p><form id="reportForm"><div class="toolbar"><div class="field"><label for="reportStation">Station</label><select id="reportStation"></select></div><div class="field"><label for="reportStatus">Observed status</label><select id="reportStatus"><option>Available</option><option>Busy</option><option>Unavailable</option></select></div><div class="field"><label for="reportWait">Estimated wait (minutes)</label><input id="reportWait" type="number" min="0" max="240" value="10"></div></div><div class="field" style="margin-bottom:12px"><label for="reportNote">Additional note (optional)</label><textarea id="reportNote" placeholder="Share a short observation"></textarea></div><button class="btn primary" type="submit">Submit observation</button> <span id="reportMsg" class="muted"></span></form></div>
+<div class="panel"><h3>Customer feedback</h3><form id="feedbackForm"><div class="toolbar"><div class="field"><label for="feedbackStation">Station</label><select id="feedbackStation"></select></div><div class="field"><label for="rating">Rating</label><select id="rating"><option value="5">5 – Excellent</option><option value="4">4 – Good</option><option value="3">3 – Average</option><option value="2">2 – Needs improvement</option><option value="1">1 – Poor</option></select></div></div><div class="field" style="margin-bottom:12px"><label for="feedbackText">Your feedback</label><input id="feedbackText" placeholder="Comment about your experience"></div><button class="btn light" type="submit">Send feedback</button> <span id="feedbackMsg" class="muted"></span></form></div>
+</section>
+<section id="ownerView" class="hidden"><div id="loginPanel" class="panel loginwrap"><div class="loginhead"><div class="loginicon">🔐</div><div><h3 style="margin:0">Station Owner Login</h3><div class="muted">Sign in to manage your registered station</div></div></div><div class="notice">Each station has an individual simulated account. Use the Station ID and password assigned to that station.</div><form id="loginForm" class="loginform"><div class="field"><label for="loginId">Station Login ID</label><input id="loginId" autocomplete="username" placeholder="e.g. CNG001" required></div><div class="field"><label for="loginPassword">Password</label><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Enter station password" required></div><button class="btn primary" type="submit">Login to station</button><div id="loginError" class="loginerror" role="alert"></div></form></div>
+<div id="ownerDashboard" class="hidden"><div class="panel"><div class="ownerheading"><div><h3 style="margin-bottom:5px">Station management</h3><div class="muted" id="ownerWelcome"></div></div><button class="btn ghost" onclick="logoutOwner()">Log out</button></div><hr class="divider"><div class="stats"><div class="stat"><strong id="ownerCategory">—</strong><span>Energy category</span></div><div class="stat"><strong id="ownerActive">—</strong><span id="ownerActiveLabel">Active service points</span></div><div class="stat"><strong id="ownerWait">—</strong><span>Estimated wait</span></div></div><div class="owner-controls"><div class="controlcard"><h4>Station availability</h4><div class="field"><label for="ownerStatus">Current status</label><select id="ownerStatus"><option>Available</option><option>Busy</option><option>Unavailable</option></select></div><div class="field" style="margin-top:10px"><label for="ownerWaitInput">Estimated waiting time (minutes)</label><input id="ownerWaitInput" type="number" min="0" max="240"></div></div><div class="controlcard"><h4 id="pointLabel">Service points</h4><div class="controlrow"><span id="activePointLabel">Active points</span><div class="stepper"><button type="button" onclick="adjustActive(-1)" aria-label="Decrease active points">−</button><strong id="activePointsValue">0</strong><button type="button" onclick="adjustActive(1)" aria-label="Increase active points">+</button></div></div><div class="controlrow"><span id="totalPointLabel">Total points</span><strong id="totalPointsValue">0</strong></div><div class="muted" id="pointHelp">Set how many service points are currently operational.</div></div></div><div class="ownerbar"><button class="btn teal" onclick="saveOwnerUpdate()">Save station updates</button><span id="ownerSaveMsg" class="muted" style="align-self:center"></span></div></div>
+<div class="panel"><h3>Reports for your station</h3><div id="reportsList" class="muted">No observations received yet.</div><hr class="divider"><h3>Customer feedback</h3><div id="feedbackList" class="muted">No feedback received yet.</div></div></div></section>
+<div class="footer">CNG CONNECT · NCSC PROJECT · Illustrative station records and simulated owner accounts</div>
 </main>
 <script>
-const seed = [
- {id:"ST001",name:"Demo CNG Station A",area:"Khopoli",address:"Demo address, Khopoli, Raigad, Maharashtra",status:"Available",wait:10,updated:"Demo data"},
- {id:"ST002",name:"Demo CNG Station B",area:"Lodhivali",address:"Demo address, Lodhivali, Raigad, Maharashtra",status:"Busy",wait:25,updated:"Demo data"},
- {id:"ST003",name:"Demo CNG Station C",area:"Pali",address:"Demo address, Pali, Raigad, Maharashtra",status:"Unavailable",wait:0,updated:"Demo data"}
+const stationSeed = [
+['CNG001','CNG Connect Prime','CNG','Khopoli','Available',12,6,4],['CNG002','GreenGas Hub','CNG','Lodhivali','Busy',22,6,3],['CNG003','MahaGas Point','CNG','Pali','Available',8,5,4],['CNG004','EcoFuel Station','CNG','Panvel','Available',10,6,5],['CNG005','QuickGas Centre','CNG','Pen','Unavailable',0,5,0],['CNG006','UrbanGas Point','CNG','Khalapur','Busy',18,6,2],['CNG007','PowerGas Hub','CNG','Nagothane','Available',7,4,3],
+['PET001','Velocity Fuel Hub','Petrol','Khopoli','Available',5,8,7],['PET002','PrimePetrol Centre','Petrol','Lodhivali','Busy',14,8,5],['PET003','SpeedWay Fuels','Petrol','Pali','Available',4,6,5],['PET004','RoyalFuel Point','Petrol','Panvel','Available',6,10,8],['PET005','DriveMax Station','Petrol','Pen','Unavailable',0,6,0],['PET006','CityFuel Hub','Petrol','Khalapur','Busy',16,8,4],['PET007','TurboPetrol Point','Petrol','Nagothane','Available',5,6,5],
+['DSL001','DieselMax Hub','Diesel','Khopoli','Available',6,7,6],['DSL002','PowerDiesel Centre','Diesel','Lodhivali','Busy',17,8,5],['DSL003','RoadKing Fuels','Diesel','Pali','Available',5,6,5],['DSL004','MahaDiesel Point','Diesel','Panvel','Available',8,8,7],['DSL005','FleetFuel Station','Diesel','Pen','Unavailable',0,6,0],['DSL006','HighwayDiesel Hub','Diesel','Khalapur','Busy',20,8,3],['DSL007','ProDiesel Centre','Diesel','Nagothane','Available',7,6,4],
+['EV001','VoltCharge Hub','EV Charging Point','Khopoli','Available',18,4,3],['EV002','GreenVolt Station','EV Charging Point','Lodhivali','Busy',25,6,3],['EV003','ElectroPoint','EV Charging Point','Panvel','Available',12,5,4],['EV004','ChargeWay Centre','EV Charging Point','Pen','Unavailable',0,4,0],['EV005','PowerPlug Hub','EV Charging Point','Khalapur','Available',15,6,5]
 ];
-let stations = JSON.parse(localStorage.getItem("cng_stations")||"null") || seed;
-let reports = JSON.parse(localStorage.getItem("cng_reports")||"[]");
-let feedback = JSON.parse(localStorage.getItem("cng_feedback")||"[]");
-function save(){localStorage.setItem("cng_stations",JSON.stringify(stations));localStorage.setItem("cng_reports",JSON.stringify(reports));localStorage.setItem("cng_feedback",JSON.stringify(feedback));}
-function showRole(role){
- document.getElementById("userView").classList.toggle("hidden",role!=="user");
- document.getElementById("ownerView").classList.toggle("hidden",role!=="owner");
- document.getElementById("userTab").classList.toggle("active",role==="user");
- document.getElementById("ownerTab").classList.toggle("active",role==="owner");
- if(role==="owner")renderOwner();else renderStations();
-}
-function statusClass(s){return s==="Available"?"available":s==="Busy"?"busy":"unavailable"}
-function refreshStats(){
- document.getElementById("totalCount").textContent=stations.length;
- document.getElementById("availableCount").textContent=stations.filter(s=>s.status==="Available").length;
- const active=stations.filter(s=>s.status!=="Unavailable");
- const avg=active.length?Math.round(active.reduce((a,s)=>a+Number(s.wait),0)/active.length):0;
- document.getElementById("avgWait").textContent=avg+" min";
- document.getElementById("ownerTotal").textContent=stations.length;
- document.getElementById("ownerReports").textContent=reports.length;
- document.getElementById("ownerFeedback").textContent=feedback.length;
-}
-function fillStationSelects(){
- ["reportStation","feedbackStation"].forEach(id=>{
-  const el=document.getElementById(id),old=el.value;
-  el.innerHTML=stations.map(s=>`<option value="${s.id}">${s.name} — ${s.area}</option>`).join("");
-  if(stations.some(s=>s.id===old))el.value=old;
- });
-}
-function renderStations(){
- const q=document.getElementById("search").value.toLowerCase(),f=document.getElementById("filter").value;
- const shown=stations.filter(s=>(s.name+" "+s.area).toLowerCase().includes(q)&&(f==="All"||s.status===f));
- document.getElementById("stationList").innerHTML=shown.length?shown.map(s=>`
- <article class="station"><div class="station-top"><div><h4>${esc(s.name)}</h4><div class="area">📍 ${esc(s.area)}</div></div><span class="status ${statusClass(s.status)}">${s.status}</span></div>
- <div class="wait"><strong>${s.status==="Unavailable"?"—":Number(s.wait)}</strong><span>${s.status==="Unavailable"?"Not available":"minutes estimated wait"}</span></div>
- <div class="tiny">${esc(s.address)}</div><div class="station-foot"><span class="tiny">Last update: ${esc(s.updated)}</span><button class="linkbtn" onclick="openMap('${encodeURIComponent(s.area+', Raigad, Maharashtra')}')">Search area ↗</button></div></article>`).join(""):'<div class="empty" style="grid-column:1/-1">No matching stations. Try another search or filter.</div>';
- refreshStats();fillStationSelects();
-}
-function renderOwner(){
- document.getElementById("ownerRows").innerHTML=stations.map(s=>`
- <div class="owner-row"><div><strong>${esc(s.name)}</strong><div class="tiny">${esc(s.area)} · ${esc(s.id)}</div></div>
- <div class="field"><label>Status</label><select id="status_${s.id}"><option ${s.status==="Available"?"selected":""}>Available</option><option ${s.status==="Busy"?"selected":""}>Busy</option><option ${s.status==="Unavailable"?"selected":""}>Unavailable</option></select></div>
- <div class="field"><label>Wait (minutes)</label><input id="wait_${s.id}" type="number" min="0" max="240" value="${Number(s.wait)}"></div>
- <button class="btn green" onclick="updateStation('${s.id}')">Save update</button></div>`).join("");
- document.getElementById("reportsList").innerHTML=reports.length?reports.slice().reverse().map(r=>`<div style="padding:10px 0;border-bottom:1px solid var(--line)"><strong>${esc(r.station)}</strong> · ${esc(r.status)} · ${r.wait} min <div class="tiny">${esc(r.note||"No note")} · ${esc(r.time)}</div></div>`).join(""):"No reports yet.";
- document.getElementById("feedbackList").innerHTML=feedback.length?feedback.slice().reverse().map(r=>`<div style="padding:10px 0;border-bottom:1px solid var(--line)"><strong>${esc(r.station)}</strong> · ${r.rating}/5 <div class="tiny">${esc(r.comment)} · ${esc(r.time)}</div></div>`).join(""):"No feedback yet.";
- refreshStats();
-}
-function updateStation(id){
- const s=stations.find(x=>x.id===id),status=document.getElementById("status_"+id).value,wait=Number(document.getElementById("wait_"+id).value);
- if(!Number.isFinite(wait)||wait<0||wait>240){alert("Enter a waiting time between 0 and 240 minutes.");return;}
- s.status=status;s.wait=status==="Unavailable"?0:wait;s.updated="Just now (demo owner update)";
- save();renderOwner();renderStations();
- const note=document.createElement("div");note.className="notice";note.textContent="Saved: "+s.name+" is now marked "+s.status+" with "+s.wait+" minute(s) estimated wait. The User Dashboard has been updated.";document.getElementById("ownerRows").prepend(note);
-}
-function openMap(q){window.open("https://www.google.com/maps/search/?api=1&query="+q,"_blank","noopener")}
-function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-document.getElementById("reportForm").addEventListener("submit",e=>{
- e.preventDefault();const s=stations.find(x=>x.id===document.getElementById("reportStation").value);
- reports.push({station:s.name,status:document.getElementById("reportStatus").value,wait:Number(document.getElementById("reportWait").value),note:document.getElementById("reportNote").value,time:new Date().toLocaleString()});
- save();document.getElementById("reportMsg").textContent="Report submitted for owner review.";document.getElementById("reportNote").value="";renderOwner();
-});
-document.getElementById("feedbackForm").addEventListener("submit",e=>{
- e.preventDefault();const s=stations.find(x=>x.id===document.getElementById("feedbackStation").value),comment=document.getElementById("feedbackText").value.trim();
- if(!comment){document.getElementById("feedbackMsg").textContent="Please add a short comment.";return;}
- feedback.push({station:s.name,rating:Number(document.getElementById("rating").value),comment,time:new Date().toLocaleString()});
- save();document.getElementById("feedbackMsg").textContent="Thank you! Feedback saved.";document.getElementById("feedbackText").value="";renderOwner();
-});
-renderStations();renderOwner();
-
-// PWA setup: install prompt where supported; service worker for app-shell caching.
-let deferredInstallPrompt = null;
-window.addEventListener("beforeinstallprompt", (event) => {
-  event.preventDefault();
-  deferredInstallPrompt = event;
-  const button = document.getElementById("pwaInstallButton");
-  if (button) button.classList.remove("hidden");
-});
-window.addEventListener("appinstalled", () => {
-  const button = document.getElementById("pwaInstallButton");
-  if (button) button.classList.add("hidden");
-});
-async function installCNGApp() {
-  if (!deferredInstallPrompt) {
-    alert("On iPhone: open this site in Safari, tap Share, then Add to Home Screen. On Android: use Chrome's menu and choose Install app or Add to Home screen.");
-    return;
-  }
-  deferredInstallPrompt.prompt();
-  await deferredInstallPrompt.userChoice;
-  deferredInstallPrompt = null;
-}
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./service-worker.js").catch(err => console.log("Service worker registration failed", err));
-  });
-}
-
-</script>
-</body>
-</html>
+const credentials = {'CNG001':'CNG@101','CNG002':'CNG@102','CNG003':'CNG@103','CNG004':'CNG@104','CNG005':'CNG@105','CNG006':'CNG@106','CNG007':'CNG@107','PET001':'PET@201','PET002':'PET@202','PET003':'PET@203','PET004':'PET@204','PET005':'PET@205','PET006':'PET@206','PET007':'PET@207','DSL001':'DSL@301','DSL002':'DSL@302','DSL003':'DSL@303','DSL004':'DSL@304','DSL005':'DSL@305','DSL006':'DSL@306','DSL007':'DSL@307','EV001':'EV@401','EV002':'EV@402','EV003':'EV@403','EV004':'EV@404','EV005':'EV@405'};
+const pointLabels = {'CNG':'Filling Points','Petrol':'Fuel Dispensing Points','Diesel':'Fuel Dispensing Points','EV Charging Point':'Charging Points'};
+const pointSingular = {'CNG':'filling point','Petrol':'dispensing point','Diesel':'dispensing point','EV Charging Point':'charging point'};
+let stations = loadStations();let reports=JSON.parse(localStorage.getItem('cng_v2_reports')||'[]');let feedback=JSON.parse(localStorage.getItem('cng_v2_feedback')||'[]');let loggedOwner=null;let pendingActive=0;
+function loadStations(){try{const saved=JSON.parse(localStorage.getItem('cng_v2_stations')||'null');if(Array.isArray(saved)&&saved.length===26&&saved.every(s=>credentials[s.id]))return saved;}catch(e){}return stationSeed.map(a=>({id:a[0],name:a[1],category:a[2],area:a[3],address:a[3]+', Raigad, Maharashtra, India',status:a[4],wait:a[5],totalPoints:a[6],activePoints:a[7],updated:'Initial sample record'}));}
+function persist(){localStorage.setItem('cng_v2_stations',JSON.stringify(stations));localStorage.setItem('cng_v2_reports',JSON.stringify(reports));localStorage.setItem('cng_v2_feedback',JSON.stringify(feedback));}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function statusClass(s){return s==='Available'?'available':s==='Busy'?'busy':'unavailable';}
+function showRole(role){document.getElementById('userView').classList.toggle('hidden',role!=='user');document.getElementById('ownerView').classList.toggle('hidden',role!=='owner');document.getElementById('userTab').classList.toggle('active',role==='user');document.getElementById('ownerTab').classList.toggle('active',role==='owner');if(role==='user'){logoutOwner(false);renderStations();}else{document.getElementById('loginPanel').classList.toggle('hidden',!!loggedOwner);document.getElementById('ownerDashboard').classList.toggle('hidden',!loggedOwner);if(loggedOwner)renderOwnerDashboard();}}
+function refreshStats(){document.getElementById('totalCount').textContent=stations.length;document.getElementById('availableCount').textContent=stations.filter(s=>s.status==='Available').length;const list=stations.filter(s=>s.status!=='Unavailable');const avg=list.length?Math.round(list.reduce((n,s)=>n+Number(s.wait),0)/list.length):0;document.getElementById('avgWait').textContent=avg+' min';}
+function fillSelects(){['reportStation','feedbackStation'].forEach(id=>{const el=document.getElementById(id),old=el.value;el.innerHTML=stations.map(s=>`<option value="${s.id}">${esc(s.name)} · ${esc(s.category)}</option>`).join('');if(stations.some(s=>s.id===old))el.value=old;});}
+function renderStations(){const category=document.getElementById('categoryFilter').value,q=document.getElementById('search').value.toLowerCase(),filter=document.getElementById('statusFilter').value;const shown=stations.filter(s=>s.category===category&&(s.name+' '+s.area).toLowerCase().includes(q)&&(filter==='All'||s.status===filter));document.getElementById('stationList').innerHTML=shown.length?shown.map(s=>{const pct=s.totalPoints?Math.round(100*s.activePoints/s.totalPoints):0;const wait=s.status==='Unavailable'?'—':Number(s.wait)+' min';return `<article class="station"><div class="stationtop"><div><h4>${esc(s.name)}</h4><div class="area">📍 ${esc(s.area)}, Raigad</div><div style="margin-top:7px"><span class="categorytag">${esc(s.category)}</span></div></div><span class="pill ${statusClass(s.status)}">${esc(s.status)}</span></div><div class="waitrow"><strong>${wait}</strong><span>estimated waiting time</span></div><div class="pointbox"><div class="pointtop"><span>Active ${esc(pointLabels[s.category])}</span><span>${s.activePoints} / ${s.totalPoints}</span></div><div class="track"><i style="width:${pct}%"></i></div><div class="tiny" style="margin-top:6px">${s.totalPoints-s.activePoints} ${pointSingular[s.category]}(s) currently inactive</div></div><div class="tiny">${esc(s.address)} · Updated: ${esc(s.updated)}</div><div class="stationfoot"><span class="tiny">Station ID: ${esc(s.id)}</span><button class="linkbtn" onclick="openMap('${encodeURIComponent(s.area+', Raigad, Maharashtra, India')}')">View area ↗</button></div></article>`;}).join(''):'<div class="empty" style="grid-column:1/-1">No matching stations. Try another search or availability filter.</div>';refreshStats();fillSelects();}
+function openMap(q){window.open('https://www.google.com/maps/search/?api=1&query='+q,'_blank','noopener');}
+document.getElementById('loginForm').addEventListener('submit',e=>{e.preventDefault();const id=document.getElementById('loginId').value.trim().toUpperCase(),pw=document.getElementById('loginPassword').value;const station=stations.find(s=>s.id===id);if(!station||credentials[id]!==pw){document.getElementById('loginError').textContent='Incorrect Station ID or password. Please try again.';return;}loggedOwner=id;document.getElementById('loginError').textContent='';document.getElementById('loginPanel').classList.add('hidden');document.getElementById('ownerDashboard').classList.remove('hidden');renderOwnerDashboard();});
+function logoutOwner(clear=true){loggedOwner=null;if(clear){document.getElementById('loginId').value='';document.getElementById('loginPassword').value='';document.getElementById('loginPanel').classList.remove('hidden');document.getElementById('ownerDashboard').classList.add('hidden');} }
+function renderOwnerDashboard(){const s=stations.find(x=>x.id===loggedOwner);if(!s)return logoutOwner();document.getElementById('ownerWelcome').textContent=s.name+' · '+s.id+' · '+s.area;document.getElementById('ownerCategory').textContent=s.category;document.getElementById('ownerActive').textContent=s.activePoints+' / '+s.totalPoints;document.getElementById('ownerActiveLabel').textContent='Active '+pointLabels[s.category];document.getElementById('ownerWait').textContent=s.status==='Unavailable'?'Not available':s.wait+' min';document.getElementById('ownerStatus').value=s.status;document.getElementById('ownerWaitInput').value=s.wait;document.getElementById('pointLabel').textContent=pointLabels[s.category];document.getElementById('activePointLabel').textContent='Active '+pointLabels[s.category];document.getElementById('totalPointLabel').textContent='Total '+pointLabels[s.category].toLowerCase();document.getElementById('activePointsValue').textContent=s.activePoints;document.getElementById('totalPointsValue').textContent=s.totalPoints;document.getElementById('pointHelp').textContent='Maximum available: '+s.totalPoints+' '+pointSingular[s.category]+'s.';pendingActive=s.activePoints;const rs=reports.filter(r=>r.id===s.id);document.getElementById('reportsList').innerHTML=rs.length?rs.slice().reverse().map(r=>`<div style="padding:9px 0;border-bottom:1px solid var(--line)"><strong>${esc(r.status)}</strong> · ${r.wait} min<div class="tiny">${esc(r.note||'No additional note')} · ${esc(r.time)}</div></div>`).join(''):'No observations received yet.';const fs=feedback.filter(r=>r.id===s.id);document.getElementById('feedbackList').innerHTML=fs.length?fs.slice().reverse().map(r=>`<div style="padding:9px 0;border-bottom:1px solid var(--line)"><strong>${r.rating}/5</strong> · ${esc(r.comment)}<div class="tiny">${esc(r.time)}</div></div>`).join(''):'No feedback received yet.';}
+function adjustActive(delta){const s=stations.find(x=>x.id===loggedOwner);if(!s)return;pendingActive=Math.max(0,Math.min(s.totalPoints,pendingActive+delta));document.getElementById('activePointsValue').textContent=pendingActive;}
+function saveOwnerUpdate(){const s=stations.find(x=>x.id===loggedOwner);if(!s)return;const wait=Number(document.getElementById('ownerWaitInput').value),status=document.getElementById('ownerStatus').value;if(!Number.isFinite(wait)||wait<0||wait>240){alert('Enter a waiting time between 0 and 240 minutes.');return;}s.status=status;s.wait=status==='Unavailable'?0:wait;s.activePoints=status==='Unavailable'?0:pendingActive;s.updated='Just now (owner update)';persist();renderOwnerDashboard();renderStations();document.getElementById('ownerSaveMsg').textContent='Saved. User station listings have been updated on this device.';}
+document.getElementById('reportForm').addEventListener('submit',e=>{e.preventDefault();const s=stations.find(x=>x.id===document.getElementById('reportStation').value);reports.push({id:s.id,station:s.name,status:document.getElementById('reportStatus').value,wait:Number(document.getElementById('reportWait').value),note:document.getElementById('reportNote').value,time:new Date().toLocaleString()});persist();document.getElementById('reportMsg').textContent='Observation submitted for station review.';document.getElementById('reportNote').value='';if(loggedOwner)renderOwnerDashboard();});
+document.getElementById('feedbackForm').addEventListener('submit',e=>{e.preventDefault();const s=stations.find(x=>x.id===document.getElementById('feedbackStation').value),comment=document.getElementById('feedbackText').value.trim();if(!comment){document.getElementById('feedbackMsg').textContent='Please add a short comment.';return;}feedback.push({id:s.id,station:s.name,rating:Number(document.getElementById('rating').value),comment,time:new Date().toLocaleString()});persist();document.getElementById('feedbackMsg').textContent='Thank you! Feedback saved.';document.getElementById('feedbackText').value='';if(loggedOwner)renderOwnerDashboard();});
+renderStations();if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
+</script></body></html>

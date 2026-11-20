@@ -2,7 +2,7 @@
   "id": "./",
   "name": "CNG CONNECT",
   "short_name": "CNG CONNECT",
-  "description": "Smarter CNG station discovery and estimated waiting-time information.",
+  "description": "Find CNG, Petrol, Diesel and EV charging stations with estimated queues and active service-point information.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
